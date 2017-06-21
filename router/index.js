@@ -8,9 +8,17 @@ router.get('/api/whoami', (req, res) => {
 });
 
 function parseHeader(request) {
+  let ips = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
+  let ip = ips.split(',')[0];
+  
+  let languages = request.headers['accept-language'];
+  let language = languages.split(',')[0];
+  
+  
+
     return {
-        ipaddress: request.ip,
-        language: request.headers['accept-language'],
+        ipaddress: ip,
+        language: language,
         software: request.headers['user-agent']
     };
 }
