@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const useragent = require('useragent');
+
+useragent(true);
 
 router.get('/api/whoami', (req, res) => {
     
@@ -14,12 +17,13 @@ function parseHeader(request) {
   let languages = request.headers['accept-language'];
   let language = languages.split(',')[0];
   
-  
+  let agent = useragent.parse(request.headers['user-agent']);
+  let os = agent.os.toString();
 
     return {
         ipaddress: ip,
         language: language,
-        software: request.headers['user-agent']
+        software: os
     };
 }
 
